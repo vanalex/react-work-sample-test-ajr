@@ -12,12 +12,21 @@ const TodoCheckbox = styled.input`
 
 export interface TodoItemProps {
   todo: Todo;
+  onToggle: OnToggle;
   className?: string;
 }
 
-const _TodoItem: React.FC<TodoItemProps> = ({todo, className}) => (
+export type OnToggle = (id: string | number) => void;
+
+const _TodoItem: React.FC<TodoItemProps> = ({todo, onToggle, className}) => (
   <li data-cy='TodoItem' className={className}>
-    <TodoCheckbox type='checkbox' checked={todo.done} />
+    <TodoCheckbox
+      type='checkbox'
+      checked={todo.done}
+      onChange={() => {
+        onToggle(todo.id);
+      }}
+    />
     <TodoText done={todo.done}>{todo.text}</TodoText>
   </li>
 );
